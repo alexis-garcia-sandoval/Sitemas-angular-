@@ -1,0 +1,47 @@
+<div class="page-container">
+  <mat-card *ngIf="transaction$ | async as tx" class="receipt-card">
+    <div class="success-icon">
+      <mat-icon>check_circle</mat-icon>
+    </div>
+    <mat-card-header>
+      <mat-card-title>Transferencia Exitosa</mat-card-title>
+      <mat-card-subtitle>Folio: {{ tx.folio }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="detail-row">
+        <span class="label">De:</span>
+        <span>{{ tx.fromAccount }}</span>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="detail-row">
+        <span class="label">Para:</span>
+        <span>{{ tx.toAccount }}</span>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="detail-row">
+        <span class="label">Monto:</span>
+        <span class="amount">{{ tx.amount | currency:'MXN':'symbol':'1.2-2' }}</span>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="detail-row">
+        <span class="label">Concepto:</span>
+        <span>{{ tx.concept }}</span>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="detail-row">
+        <span class="label">Fecha:</span>
+        <span>{{ tx.date | date:'dd/MM/yyyy HH:mm' }}</span>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" routerLink="/dashboard">
+        <mat-icon>home</mat-icon> Ir al inicio
+      </button>
+      <button mat-stroked-button routerLink="/transferencia">
+        <mat-icon>send</mat-icon> Nueva transferencia
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

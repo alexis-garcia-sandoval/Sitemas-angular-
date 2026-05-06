@@ -1,0 +1,31 @@
+.page-container {
+  max-width: 600px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+}
+
+.label {
+  font-weight: 500;
+  color: #666;
+}
+
+.amount {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a237e;
+}
+
+.error-message {
+  color: #f44336;
+  margin-top: 16px;
+  padding: 12px;
+  background: #ffebee;
+  border-radius: 4px;
+}

@@ -1,0 +1,18 @@
+.page-container {
+  max-width: 1000px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+.filters-card {
+  margin-bottom: 16px;
+}
+
+.filters-form {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 8px 0;
+}
+
+.full-width { width: 100%; }

@@ -1,0 +1,67 @@
+<div class="page-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Nueva Transferencia</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="form">
+
+        <!-- Cuenta origen -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Cuenta origen</mat-label>
+          <mat-select formControlName="fromAccountId">
+            <mat-option *ngFor="let acc of myAccounts" [value]="acc.id">
+              {{ acc.accountNumber }} — {{ acc.balance | currency:'MXN' }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Selecciona una cuenta</mat-error>
+        </mat-form-field>
+
+        <!-- Cuenta destino con búsqueda RxJS -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Número de cuenta destino</mat-label>
+          <input matInput formControlName="toAccountNumber" placeholder="Escribe para buscar...">
+          <mat-hint>Busca por número de cuenta o nombre</mat-hint>
+          <mat-error *ngIf="form.get('toAccountNumber')?.hasError('required')">Campo requerido</mat-error>
+          <mat-error *ngIf="form.get('toAccountNumber')?.hasError('minlength')">Mínimo 10 dígitos</mat-error>
+        </mat-form-field>
+
+        <!-- Resultados de búsqueda -->
+        <div class="search-results" *ngIf="searchResults.length > 0">
+          <div class="search-item" *ngFor="let result of searchResults" (click)="selectAccount(result)">
+            <span class="account-number">{{ result.accountNumber }}</span>
+            <span class="owner-name">{{ result.ownerName }}</span>
+          </div>
+        </div>
+        <p *ngIf="isSearching" class="searching-text">Buscando...</p>
+
+        <!-- Monto -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Monto</mat-label>
+          <input matInput formControlName="amount" type="number" placeholder="0.00">
+          <span matPrefix>$&nbsp;</span>
+          <mat-hint>Saldo disponible: {{ getSelectedAccountBalance() | currency:'MXN' }}</mat-hint>
+          <mat-error *ngIf="form.get('amount')?.hasError('required')">Campo requerido</mat-error>
+          <mat-error *ngIf="form.get('amount')?.hasError('min')">El monto debe ser mayor a 0</mat-error>
+          <mat-error *ngIf="form.get('amount')?.hasError('insufficientFunds')">Saldo insuficiente</mat-error>
+        </mat-form-field>
+
+        <!-- Concepto -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Concepto</mat-label>
+          <input matInput formControlName="concept" placeholder="Ej. Pago de renta">
+          <mat-error>El concepto es requerido (máx. 100 caracteres)</mat-error>
+        </mat-form-field>
+
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-button routerLink="/dashboard">Cancelar</button>
+      <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="onContinue()">
+        Continuar
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

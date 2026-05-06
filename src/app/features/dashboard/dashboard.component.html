@@ -1,0 +1,33 @@
+<mat-toolbar color="primary">
+  <span>Banca en Línea</span>
+  <span class="spacer"></span>
+  <span *ngIf="user$ | async as user">{{ user.name }}</span>
+  <button mat-icon-button (click)="logout()" title="Cerrar sesión">
+    <mat-icon>exit_to_app</mat-icon>
+  </button>
+</mat-toolbar>
+
+<div class="container">
+  <h2>Mis Cuentas</h2>
+
+  <div class="accounts-grid">
+    <mat-card *ngFor="let account of accounts" class="account-card">
+      <mat-card-header>
+        <mat-card-title>Cuenta {{ account.accountNumber }}</mat-card-title>
+        <mat-card-subtitle>{{ account.ownerName }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="balance">{{ account.balance | currency:'MXN':'symbol':'1.2-2' }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="actions">
+    <button mat-raised-button color="primary" routerLink="/transferencia">
+      <mat-icon>send</mat-icon> Nueva Transferencia
+    </button>
+    <button mat-stroked-button routerLink="/historial">
+      <mat-icon>history</mat-icon> Ver Historial
+    </button>
+  </div>
+</div>
