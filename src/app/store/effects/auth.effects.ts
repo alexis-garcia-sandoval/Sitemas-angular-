@@ -3,6 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { AuthService } from '../../core/services/auth.service';
+import { NotificationService } from '../../core/services/notification.service';
 import * as AuthActions from '../actions/auth.actions';
 
 @Injectable()
@@ -23,7 +24,19 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthActions.loginSuccess),
-        tap(() => this.router.navigate(['/dashboard']))
+        tap(({ user }) => {
+          this.notification.success(`Bienvenido, ${user.name}`);
+          this.router.navigate(['/dashboard']);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  loginFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.loginFailure),
+        tap(({ error }) => this.notification.error(error))
       ),
     { dispatch: false }
   );
@@ -34,6 +47,7 @@ export class AuthEffects {
         ofType(AuthActions.logout),
         tap(() => {
           this.authService.logout();
+          this.notification.success('Sesión cerrada correctamente');
           this.router.navigate(['/login']);
         })
       ),
@@ -43,6 +57,7 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
+    private notification: NotificationService,
     private router: Router
   ) {}
 }

@@ -1,33 +1,85 @@
-<mat-toolbar color="primary">
-  <span>Banca en Línea</span>
-  <span class="spacer"></span>
-  <span *ngIf="user$ | async as user">{{ user.name }}</span>
-  <button mat-icon-button (click)="logout()" title="Cerrar sesión">
-    <mat-icon>exit_to_app</mat-icon>
-  </button>
-</mat-toolbar>
+<div class="dashboard">
+  <div class="page-header">
+    <h1>Dashboard</h1>
+    <p *ngIf="user$ | async as user">Hola, <strong>{{ user.name }}</strong></p>
+  </div>
 
-<div class="container">
-  <h2>Mis Cuentas</h2>
+  <!-- KPI Cards -->
+  <div class="kpi-grid">
+    <mat-card class="kpi-card kpi-primary">
+      <mat-icon>account_balance_wallet</mat-icon>
+      <div>
+        <p class="kpi-label">Saldo total</p>
+        <p class="kpi-value">{{ totalBalance | currency:'MXN':'symbol':'1.2-2' }}</p>
+      </div>
+    </mat-card>
 
-  <div class="accounts-grid">
-    <mat-card *ngFor="let account of accounts" class="account-card">
-      <mat-card-header>
-        <mat-card-title>Cuenta {{ account.accountNumber }}</mat-card-title>
-        <mat-card-subtitle>{{ account.ownerName }}</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <p class="balance">{{ account.balance | currency:'MXN':'symbol':'1.2-2' }}</p>
-      </mat-card-content>
+    <mat-card class="kpi-card kpi-success">
+      <mat-icon>credit_card</mat-icon>
+      <div>
+        <p class="kpi-label">Cuentas activas</p>
+        <p class="kpi-value">{{ accounts.length }}</p>
+      </div>
+    </mat-card>
+
+    <mat-card class="kpi-card kpi-accent">
+      <mat-icon>receipt_long</mat-icon>
+      <div>
+        <p class="kpi-label">Movimientos</p>
+        <p class="kpi-value">{{ recentTransactions.length }}</p>
+      </div>
     </mat-card>
   </div>
 
-  <div class="actions">
-    <button mat-raised-button color="primary" routerLink="/transferencia">
-      <mat-icon>send</mat-icon> Nueva Transferencia
-    </button>
-    <button mat-stroked-button routerLink="/historial">
-      <mat-icon>history</mat-icon> Ver Historial
-    </button>
+  <!-- Contenido principal -->
+  <div class="main-grid">
+
+    <!-- Gráfica de gastos -->
+    <mat-card class="chart-card">
+      <mat-card-header>
+        <mat-card-title>Resumen de Gastos</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <canvas baseChart
+          [data]="barChartData"
+          [options]="barChartOptions"
+          type="bar">
+        </canvas>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Cuentas + acciones -->
+    <div class="right-panel">
+
+      <mat-card class="accounts-card">
+        <mat-card-header>
+          <mat-card-title>Mis Cuentas</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="account-item" *ngFor="let acc of accounts">
+            <div class="account-info">
+              <span class="account-number">****{{ acc.accountNumber.slice(-4) }}</span>
+              <span class="account-type">Cuenta de cheques</span>
+            </div>
+            <span class="account-balance">{{ acc.balance | currency:'MXN':'symbol':'1.2-2' }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="actions-card">
+        <mat-card-header>
+          <mat-card-title>Acciones rápidas</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <button mat-raised-button color="primary" routerLink="/transferencia" class="action-btn">
+            <mat-icon>send</mat-icon> Nueva Transferencia
+          </button>
+          <button mat-stroked-button routerLink="/historial" class="action-btn">
+            <mat-icon>history</mat-icon> Ver Historial
+          </button>
+        </mat-card-content>
+      </mat-card>
+
+    </div>
   </div>
 </div>

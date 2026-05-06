@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
+import { LayoutComponent } from './shared/layout/layout.component';
 
 const routes: Routes = [
   {
@@ -9,24 +10,28 @@ const routes: Routes = [
       import('./features/auth/auth.module').then(m => m.AuthModule),
   },
   {
-    path: 'dashboard',
+    path: '',
+    component: LayoutComponent,
     canActivate: [AuthGuard],
-    loadChildren: () =>
-      import('./features/dashboard/dashboard.module').then(m => m.DashboardModule),
+    children: [
+      {
+        path: 'dashboard',
+        loadChildren: () =>
+          import('./features/dashboard/dashboard.module').then(m => m.DashboardModule),
+      },
+      {
+        path: 'transferencia',
+        loadChildren: () =>
+          import('./features/transfer/transfer.module').then(m => m.TransferModule),
+      },
+      {
+        path: 'historial',
+        loadChildren: () =>
+          import('./features/history/history.module').then(m => m.HistoryModule),
+      },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+    ],
   },
-  {
-    path: 'transferencia',
-    canActivate: [AuthGuard],
-    loadChildren: () =>
-      import('./features/transfer/transfer.module').then(m => m.TransferModule),
-  },
-  {
-    path: 'historial',
-    canActivate: [AuthGuard],
-    loadChildren: () =>
-      import('./features/history/history.module').then(m => m.HistoryModule),
-  },
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' },
 ];
 

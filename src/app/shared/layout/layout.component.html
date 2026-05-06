@@ -1,0 +1,49 @@
+<mat-sidenav-container class="sidenav-container">
+
+  <mat-sidenav class="sidenav" mode="side" opened>
+    <!-- Logo -->
+    <div class="logo-section">
+      <mat-icon class="logo-icon">account_balance</mat-icon>
+      <span class="logo-text">BancaApp</span>
+    </div>
+
+    <!-- Usuario -->
+    <div class="user-section" *ngIf="user$ | async as user">
+      <div class="avatar">{{ user.name.charAt(0) }}</div>
+      <div class="user-info">
+        <span class="user-name">{{ user.name }}</span>
+        <span class="user-email">{{ user.email }}</span>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <!-- Navegación -->
+    <mat-nav-list class="nav-list">
+      <a
+        mat-list-item
+        *ngFor="let item of navItems"
+        [routerLink]="item.route"
+        routerLinkActive="active-link"
+      >
+        <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+        <span matListItemTitle>{{ item.label }}</span>
+      </a>
+    </mat-nav-list>
+
+    <!-- Logout -->
+    <div class="logout-section">
+      <mat-divider></mat-divider>
+      <button mat-button class="logout-btn" (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        Cerrar sesión
+      </button>
+    </div>
+  </mat-sidenav>
+
+  <!-- Contenido principal -->
+  <mat-sidenav-content class="main-content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

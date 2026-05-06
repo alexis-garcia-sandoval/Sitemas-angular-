@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { catchError, map, of, switchMap, tap, withLatestFrom } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { TransferService } from '../../core/services/transfer.service';
+import { NotificationService } from '../../core/services/notification.service';
 import * as TransferActions from '../actions/transfer.actions';
 import { selectPendingTransfer } from '../selectors/transfer.selectors';
 import { AppState } from '../reducers';
@@ -28,7 +29,19 @@ export class TransferEffects {
     () =>
       this.actions$.pipe(
         ofType(TransferActions.transferSuccess),
-        tap(() => this.router.navigate(['/transferencia/comprobante']))
+        tap(({ transaction }) => {
+          this.notification.success(`Transferencia exitosa. Folio: ${transaction.folio}`);
+          this.router.navigate(['/transferencia/comprobante']);
+        })
+      ),
+    { dispatch: false }
+  );
+
+  transferFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(TransferActions.transferFailure),
+        tap(({ error }) => this.notification.error(error))
       ),
     { dispatch: false }
   );
@@ -48,6 +61,7 @@ export class TransferEffects {
   constructor(
     private actions$: Actions,
     private transferService: TransferService,
+    private notification: NotificationService,
     private store: Store<AppState>,
     private router: Router
   ) {}

@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { NgChartsModule } from 'ng2-charts';
 import { DashboardComponent } from './dashboard.component';
 
 const routes: Routes = [{ path: '', component: DashboardComponent }];
@@ -17,7 +17,7 @@ const routes: Routes = [{ path: '', component: DashboardComponent }];
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatToolbarModule,
+    NgChartsModule,
   ],
 })
 export class DashboardModule {}
