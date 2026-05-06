@@ -1,0 +1,50 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Alexis García",
+      "email": "usuario@banco.com",
+      "password": "banco123",
+      "token": "mock-jwt-token-12345"
+    }
+  ],
+  "accounts": [
+    { "id": "1", "accountNumber": "1234567890", "ownerName": "Alexis García", "balance": 45000, "currency": "MXN", "userId": "1" },
+    { "id": "2", "accountNumber": "0987654321", "ownerName": "Alexis García", "balance": 12500, "currency": "MXN", "userId": "1" },
+    { "id": "3", "accountNumber": "1111222233", "ownerName": "Juan Pérez",    "balance": 8000,  "currency": "MXN", "userId": "2" },
+    { "id": "4", "accountNumber": "4444555566", "ownerName": "María López",   "balance": 3200,  "currency": "MXN", "userId": "3" },
+    { "id": "5", "accountNumber": "7777888899", "ownerName": "Carlos Ruiz",   "balance": 21000, "currency": "MXN", "userId": "4" }
+  ],
+  "transfers": [
+    {
+      "id": "1",
+      "fromAccount": "1234567890",
+      "toAccount": "1111222233",
+      "amount": 2500,
+      "concept": "Pago de renta",
+      "date": "2026-04-15T10:30:00.000Z",
+      "status": "SUCCESS",
+      "folio": "TRF-001"
+    },
+    {
+      "id": "2",
+      "fromAccount": "1234567890",
+      "toAccount": "4444555566",
+      "amount": 800,
+      "concept": "Cena cumpleaños",
+      "date": "2026-04-20T18:00:00.000Z",
+      "status": "SUCCESS",
+      "folio": "TRF-002"
+    },
+    {
+      "id": "3",
+      "fromAccount": "0987654321",
+      "toAccount": "7777888899",
+      "amount": 5000,
+      "concept": "Préstamo personal",
+      "date": "2026-05-01T09:15:00.000Z",
+      "status": "PENDING",
+      "folio": "TRF-003"
+    }
+  ]
+}

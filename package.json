@@ -5,7 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test"
+    "test": "ng test",
+    "server": "node server.js",
+    "dev": "concurrently \"node server.js\" \"ng serve\""
   },
   "dependencies": {
     "@angular/animations": "^16.0.0",
@@ -29,6 +31,8 @@
     "@angular-devkit/build-angular": "^16.0.0",
     "@angular/cli": "^16.0.0",
     "@angular/compiler-cli": "^16.0.0",
+    "concurrently": "^8.0.0",
+    "json-server": "^0.17.4",
     "typescript": "~5.0.0"
   }
 }
